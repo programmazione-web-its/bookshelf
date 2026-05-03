@@ -26,10 +26,17 @@
   <!-- CONTENT: lista libri -->
   <section class="content-area">
     <!--
-      Passiamo books() (il valore del segnale) come @Input al componente figlio.
-      Ogni volta che il segnale cambia, Angular ri-renderizza solo questa parte.
+      isLoading è un signal(): mostra lo spinner durante il fetch iniziale,
+      poi cede il posto alla lista tramite @if/@else (sintassi Angular 17).
     -->
-    <app-book-list [books]="books()" />
+    @if (isLoading()) {
+      <div class="loader">
+        <span class="loader-spinner"></span>
+        <p>Caricamento libri…</p>
+      </div>
+    } @else {
+      <app-book-list [books]="books()" />
+    }
   </section>
 
 </main>

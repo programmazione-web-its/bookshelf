@@ -1,4 +1,4 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject, signal } from '@angular/core';
 import { BookService } from './book.service';
 import { BookFormComponent } from './book-form/book-form.component';
 import { BookListComponent } from './book-list/book-list.component';
@@ -30,6 +30,9 @@ export class AppComponent implements OnInit {
   readonly totalCount = this.bookService.totalCount;
   readonly readCount  = this.bookService.readCount;
 
+  // true mentre il fetch iniziale è in corso
+  readonly isLoading = signal(false);
+
   async ngOnInit(): Promise<void> {
     // Se il localStorage è vuoto, precarica dall'Open Library API
     if (this.books().length === 0) {
@@ -38,6 +41,7 @@ export class AppComponent implements OnInit {
   }
 
   private async _loadFromApi(): Promise<void> {
+    this.isLoading.set(true);
     try {
       const res  = await fetch('https://openlibrary.org/search.json?q=fiction&limit=10');
       const data = await res.json();
@@ -55,6 +59,8 @@ export class AppComponent implements OnInit {
       this.bookService.initBooks(books);
     } catch (err) {
       console.error('Errore nel caricamento iniziale:', err);
+    } finally {
+      this.isLoading.set(false);
     }
   }
 }
