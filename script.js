@@ -166,7 +166,9 @@ document.addEventListener('DOMContentLoaded', async () => {
   if (stored && stored.length > 0) {
     books = stored
   } else {
+    document.querySelector('#loader').classList.remove('hidden')
     books = await loadInitialBooks()
+    document.querySelector('#loader').classList.add('hidden')
     saveToStorage()
   }
   render()
