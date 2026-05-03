@@ -1,0 +1,35 @@
+<!-- HEADER -->
+<header class="site-header">
+  <div class="header-inner">
+    <div class="logo">
+      <span>📚</span>
+      <span>BookShelf</span>
+    </div>
+    <!--
+      totalCount è un computed() del service.
+      Il template legge il valore chiamando totalCount() come una funzione.
+    -->
+    <p class="counter">
+      <span>{{ totalCount() }}</span> libri in totale
+    </p>
+  </div>
+</header>
+
+<!-- LAYOUT PRINCIPALE -->
+<main class="main-layout">
+
+  <!-- SIDEBAR: form per aggiungere libri -->
+  <aside class="sidebar">
+    <app-book-form />
+  </aside>
+
+  <!-- CONTENT: lista libri -->
+  <section class="content-area">
+    <!--
+      Passiamo books() (il valore del segnale) come @Input al componente figlio.
+      Ogni volta che il segnale cambia, Angular ri-renderizza solo questa parte.
+    -->
+    <app-book-list [books]="books()" />
+  </section>
+
+</main>

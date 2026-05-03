@@ -1,0 +1,64 @@
+<div class="content-header">
+  <h2>I tuoi libri</h2>
+</div>
+
+<!--
+  @if è la nuova sintassi Angular 17 (blocco dichiarativo, senza direttiva strutturale).
+  Mostra lo stato vuoto quando non ci sono libri.
+-->
+@if (books.length === 0) {
+  <div class="empty-state">
+    <div class="empty-icon">📖</div>
+    <p>La tua libreria è vuota.</p>
+    <p>Aggiungi il primo libro usando il form!</p>
+  </div>
+}
+
+<ul class="book-list">
+  <!--
+    @for è la nuova sintassi Angular 17 (sostituisce *ngFor).
+    `track book.id` ottimizza il re-rendering: Angular aggiorna solo
+    gli elementi che cambiano, non l'intera lista.
+  -->
+  @for (book of books; track book.id) {
+    <li
+      class="book-item"
+      [class.read]="book.read"
+      [attr.data-id]="book.id"
+    >
+      <div class="book-info">
+        <p class="book-title">{{ book.title }}</p>
+        <p class="book-author">di {{ book.author }}</p>
+      </div>
+
+      <!--
+        [class] con binding stringa imposta tutte le classi dell'elemento.
+        "badge badge-fantasy" → applica entrambe le classi CSS.
+      -->
+      <span [class]="'badge badge-' + book.genre">{{ book.genre }}</span>
+
+      <div class="book-actions">
+        <!--
+          [class.read] e [class.unread] aggiungono/rimuovono la classe
+          in base al valore booleano di book.read.
+        -->
+        <button
+          class="btn-toggle"
+          [class.read]="book.read"
+          [class.unread]="!book.read"
+          (click)="toggleRead(book.id)"
+        >
+          {{ book.read ? '✓ Letto' : '○ Da leggere' }}
+        </button>
+
+        <button
+          class="btn-delete"
+          [attr.aria-label]="'Elimina ' + book.title"
+          (click)="removeBook(book.id)"
+        >
+          ✕
+        </button>
+      </div>
+    </li>
+  }
+</ul>

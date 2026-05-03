@@ -1,0 +1,58 @@
+<div class="card">
+  <h2 class="card-title">Aggiungi un libro</h2>
+
+  <!--
+    @if è la nuova sintassi Angular 17 (sostituisce *ngIf).
+    Mostra il messaggio di errore solo quando errorMessage è non vuoto.
+  -->
+  @if (errorMessage) {
+    <p class="form-error">{{ errorMessage }}</p>
+  }
+
+  <div class="form-group">
+    <label for="input-title">Titolo *</label>
+    <!--
+      [(ngModel)] = two-way binding:
+        [ngModel]="title"        → dal componente al DOM
+        (ngModelChange)="title = $event" → dal DOM al componente
+      (input) resetta l'errore mentre l'utente digita
+    -->
+    <input
+      type="text"
+      id="input-title"
+      [(ngModel)]="title"
+      (input)="errorMessage = ''"
+      (keydown.enter)="onSubmit()"
+      placeholder="Es. Il nome della rosa"
+    />
+  </div>
+
+  <div class="form-group">
+    <label for="input-author">Autore</label>
+    <input
+      type="text"
+      id="input-author"
+      [(ngModel)]="author"
+      (keydown.enter)="onSubmit()"
+      placeholder="Es. Umberto Eco"
+    />
+  </div>
+
+  <div class="form-group">
+    <label for="input-genre">Genere</label>
+    <select id="input-genre" [(ngModel)]="genre">
+      <option value="">— Seleziona —</option>
+      <option value="narrativa">Narrativa</option>
+      <option value="saggistica">Saggistica</option>
+      <option value="fantasy">Fantasy</option>
+      <option value="fantascienza">Fantascienza</option>
+      <option value="thriller">Thriller</option>
+      <option value="altro">Altro</option>
+    </select>
+  </div>
+
+  <!-- (click) collega il click al metodo onSubmit() del componente -->
+  <button class="btn btn-primary" (click)="onSubmit()">
+    + Aggiungi libro
+  </button>
+</div>
