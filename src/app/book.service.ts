@@ -7,7 +7,6 @@ const STORAGE_KEY = 'bookshelf-angular';
  * BookService — gestisce lo stato globale dei libri.
  *
  * Concetti Angular dimostrati:
- *  - signal<T>()    → stato reattivo (sostituisce BehaviorSubject per casi semplici)
  *  - computed()     → valore derivato che si ricalcola automaticamente
  *  - providedIn: 'root' → singleton disponibile in tutta l'app
  */
